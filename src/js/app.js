@@ -16,10 +16,6 @@ app.controller('TestCtrl', ['$scope', '$http', 'Oauth', 'OauthToken', 'OauthProf
 
     $scope.profile = OauthProfile;
 
-    $scope.logout = function() {
-        OauthToken.logout();
-    };
-
     $scope.simulateUnauthorized = function () {
         $http.get(Oauth.unauthorizedUrl);
     };

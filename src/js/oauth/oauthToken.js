@@ -3,6 +3,13 @@
 /*jshint -W084 */
 angular.module('ng-oauth2.token', ['ngStorage']).factory('OauthToken', ['$rootScope', '$location', '$sessionStorage', '$timeout', 'OauthEndpoint', function ($rootScope, $location, $sessionStorage, $timeout, OauthEndpoint) {
 
+    $rootScope.oauthLogout = function () {
+        delete $sessionStorage.oauthToken;
+        $timeout(function () {
+            OauthEndpoint.redirectToLogoutPage();
+        }, 110);
+    };
+
     return {
         setToken: function (token) {
             $sessionStorage.oauthToken = token;
@@ -32,13 +39,6 @@ angular.module('ng-oauth2.token', ['ngStorage']).factory('OauthToken', ['$rootSc
 
         isExpired: function () {
             return (this.getToken() && this.getToken().expires_at && new Date(this.getToken().expires_at) < new Date());
-        },
-
-        logout: function () {
-            delete $sessionStorage.oauthToken;
-            $timeout(function () {
-                OauthEndpoint.redirectToLogoutPage();
-            }, 110);
         }
     };
 

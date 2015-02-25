@@ -9,12 +9,12 @@
 <body>
 
 <div ng-controller="TestCtrl">
-    <div ng-hide="profile.hasProfile()">
+    <div ng-hide="hasOauthProfile()">
         Loading
     </div>
 
-    <div ng-show="profile.hasProfile()">
-        logged in as {{profile.getProfile().displayName}}
+    <div ng-show="hasOauthProfile()">
+        logged in as {{getOauthProfile().displayName}}
     </div>
 
     <br>

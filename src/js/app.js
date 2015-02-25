@@ -12,9 +12,7 @@ app.config(['$locationProvider', 'OauthProvider', function ($locationProvider, O
     //OauthProvider.setSendTokenOnEveryRequest(false);
 }]);
 
-app.controller('TestCtrl', ['$scope', '$http', 'Oauth', 'OauthProfile', function ($scope, $http, Oauth, OauthProfile) {
-
-    $scope.profile = OauthProfile;
+app.controller('TestCtrl', ['$scope', '$http', 'Oauth', function ($scope, $http, Oauth) {
 
     $scope.simulateUnauthorized = function () {
         $http.get(Oauth.unauthorizedUrl);

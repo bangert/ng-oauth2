@@ -1,23 +1,23 @@
 'use strict';
 
-angular.module('ng-oauth2.profile', []).factory('OauthProfile', ['$http', 'Oauth', function ($http, Oauth) {
+angular.module('ng-oauth2.profile', []).factory('OauthProfile', ['$rootScope', '$http', 'Oauth', function ($rootScope, $http, Oauth) {
 
-    var profile = null;
+    var oauthProfile = null;
+
+    $rootScope.getOauthProfile = function () {
+        return oauthProfile;
+    };
+
+    $rootScope.hasOauthProfile = function () {
+        return !!oauthProfile;
+    };
 
     return {
         makeProfileRequest: function () {
             $http.get(Oauth.profileUrl).
                 success(function (data) {
-                    profile = data;
+                    oauthProfile = data;
                 });
-        },
-
-        getProfile: function () {
-            return profile;
-        },
-
-        hasProfile: function () {
-            return !!profile;
         }
     };
 

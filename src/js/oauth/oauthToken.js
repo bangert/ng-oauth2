@@ -1,7 +1,7 @@
 'use strict';
 
 /*jshint -W084 */
-angular.module('ng-oauth2.token', ['ngStorage']).factory('OauthToken', ['$rootScope', '$location', '$sessionStorage', 'OauthEndpoint', function ($rootScope, $location, $sessionStorage, OauthEndpoint) {
+angular.module('ng-oauth2.token', ['ngStorage']).factory('OauthToken', ['$rootScope', '$location', '$sessionStorage', '$timeout', 'OauthEndpoint', function ($rootScope, $location, $sessionStorage, $timeout, OauthEndpoint) {
 
     return {
         setToken: function (token) {
@@ -17,7 +17,6 @@ angular.module('ng-oauth2.token', ['ngStorage']).factory('OauthToken', ['$rootSc
         },
 
         getTokenFromString: function () {
-
             var params = {},
                 regex = /([^&=]+)=([^&]*)/g,
                 m;
@@ -37,7 +36,9 @@ angular.module('ng-oauth2.token', ['ngStorage']).factory('OauthToken', ['$rootSc
 
         logout: function () {
             delete $sessionStorage.oauthToken;
-            //OauthEndpoint.redirectToLogoutPage();
+            $timeout(function () {
+                OauthEndpoint.redirectToLogoutPage();
+            }, 110);
         }
     };
 

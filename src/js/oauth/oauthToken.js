@@ -3,6 +3,16 @@
 /*jshint -W084 */
 angular.module('ng-oauth2.token', ['ngStorage']).factory('OauthToken', ['$rootScope', '$location', '$sessionStorage', '$timeout', 'OauthEndpoint', function ($rootScope, $location, $sessionStorage, $timeout, OauthEndpoint) {
 
+    var oAuth2HashTokens = [
+        'access_token',
+        'token_type',
+        'expires_in',
+        'scope',
+        'state',
+        'error',
+        'error_description'
+    ];
+
     $rootScope.oauthLogout = function () {
         delete $sessionStorage.oauthToken;
         $timeout(function () {
@@ -35,6 +45,16 @@ angular.module('ng-oauth2.token', ['ngStorage']).factory('OauthToken', ['$rootSc
             if (params.access_token || params.error) {
                 return params;
             }
+        },
+
+        removeFragment: function () {
+            var curHash = $location.hash();
+            angular.forEach(oAuth2HashTokens, function (hashKey) {
+                var re = new RegExp('&' + hashKey + '(=[^&]*)?|^' + hashKey + '(=[^&]*)?&?');
+                curHash = curHash.replace(re, '');
+            });
+
+            $location.hash(curHash);
         },
 
         isExpired: function () {

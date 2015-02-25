@@ -3,6 +3,7 @@
 angular.module('ng-oauth2').run(['OauthToken', 'OauthProfile', 'OauthEndpoint', function (OauthToken, OauthProfile, OauthEndpoint) {
 
     var token = OauthToken.getTokenFromString();
+    OauthToken.removeFragment();
 
     if (token) {
         OauthToken.setToken(token);

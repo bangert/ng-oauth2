@@ -12,7 +12,7 @@ app.config(['$locationProvider', 'OauthProvider', function ($locationProvider, O
     //OauthProvider.setSendTokenOnEveryRequest(false);
 }]);
 
-app.controller('TestCtrl', ['$scope', '$http', 'Oauth', 'OauthToken', 'OauthProfile', function ($scope, $http, Oauth, OauthToken, OauthProfile) {
+app.controller('TestCtrl', ['$scope', '$http', 'Oauth', 'OauthProfile', function ($scope, $http, Oauth, OauthProfile) {
 
     $scope.profile = OauthProfile;
 

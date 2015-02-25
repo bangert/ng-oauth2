@@ -1,0 +1,52 @@
+{
+  // Settings
+  "passfail": false,
+  // Stop on first error.
+  "maxerr": 100,
+  // Maximum error before stopping.
+
+  "predef": [
+    // Custom globals.
+    "angular",
+    "console",
+    "jQuery",
+    "$",
+    "_",
+    "d3",
+    "nv",
+    "setTimeout",
+    "afterEach",
+    // Tests
+    "expect",
+    "it",
+    "inject",
+    "beforeEach",
+    "module",
+    "describe",
+    "element",
+    "by",
+    "browser",
+    "require",
+    "exports",
+    "spyOn",
+    "resolvePromise",
+    "TestBoilerplate"
+  ],
+  //Globals
+  "globals": {
+    "app": true,
+    "BasicSizerFSM": true,
+    "protractor": true,
+    "casper": true,
+    "phantom": true,
+    "jasmine": true,
+    "window": true,
+    "document": true,
+    "Image": true,
+    "resemble": true
+  },
+  "strict": true,
+  // Require `use strict` pragma  in every file.
+  "globalstrict": true
+  // Allow global "use strict" (also enables 'strict').
+}

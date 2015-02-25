@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="testApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>ng-oauth2</title>
+    <base href="/src/"/>
+
+</head>
+<body>
+
+<div ng-controller="TestCtrl">
+    <div ng-hide="profile.hasProfile()">
+        Loading
+    </div>
+
+    <div ng-show="profile.hasProfile()">
+        logged in as {{profile.getProfile().displayName}}
+    </div>
+
+    <br>
+    <button ng-click="logout()">Logout</button>
+    <button ng-click="simulateUnauthorized()">Simulate a 401 unauthorized response from server</button>
+</div>
+
+<!-- Scripts -->
+<!-- Vendor -->
+<script src="../bower_components/jquery/dist/jquery.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/ngstorage/ngStorage.js"></script>
+<script src="../bower_components/angular-mocks/angular-mocks.js"></script>
+<!-- /Vendor -->
+
+<!-- Oauth -->
+<script src="js/oauth/oauthProvider.js"></script>
+<script src="js/oauth/oauthEndpoint.js"></script>
+<script src="js/oauth/oauthProfile.js"></script>
+<script src="js/oauth/oauthToken.js"></script>
+<script src="js/oauth/oauthStartup.js"></script>
+<script src="js/oauth/oauthHttpInterceptor.js"></script>
+<script src="js/oauth/oauthUnauthorizedInterceptor.js"></script>
+<script src="js/oauth/oauthConfig.js"></script>
+<!-- /Oauth -->
+
+<!-- App -->
+<script src="js/app.js"></script>
+<!-- /App -->
+
+<!-- Stubs -->
+<script src="js/stub/backend.stub.js"></script>
+<!-- /Stubs -->
+<!-- /Scripts -->
+
+</body>
+</html>

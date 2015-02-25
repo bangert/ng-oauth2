@@ -18,7 +18,8 @@ angular.module('ng-oauth2', [
 
         randomizeState: true,
         redirectOnUnauthorized: true,
-        sendTokenOnEveryRequest: true
+        sendTokenOnEveryRequest: true,
+        redirectOnLogout: true
     };
 
     return {
@@ -47,7 +48,7 @@ angular.module('ng-oauth2', [
             config.responseType = responseType;
         },
 
-        setLogoutUrl: function(logoutUrl) {
+        setLogoutUrl: function (logoutUrl) {
             config.logoutUrl = logoutUrl;
         },
 
@@ -73,6 +74,10 @@ angular.module('ng-oauth2', [
 
         setSendTokenOnEveryRequest: function (sendTokenOnEveryRequest) {
             config.sendTokenOnEveryRequest = sendTokenOnEveryRequest;
+        },
+
+        setRedirectOnLogout: function (redirectOnLogout) {
+            config.redirectOnLogout = redirectOnLogout;
         },
 
         $get: function () {

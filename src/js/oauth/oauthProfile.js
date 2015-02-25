@@ -1,23 +1,30 @@
 'use strict';
 
-angular.module('ng-oauth2.profile', []).factory('OauthProfile', ['$rootScope', '$http', 'Oauth', function ($rootScope, $http, Oauth) {
+angular.module('ng-oauth2.profile', []).factory('OauthProfile', ['$rootScope', '$q', '$http', 'Oauth', 'OauthEndpoint', function ($rootScope, $q, $http, Oauth, OauthEndpoint) {
 
-    var oauthProfile = null;
+    $rootScope.oauthProfile = null;
 
     $rootScope.getOauthProfile = function () {
-        return oauthProfile;
+        return $rootScope.oauthProfile;
     };
 
     $rootScope.hasOauthProfile = function () {
-        return !!oauthProfile;
+        return !!$rootScope.oauthProfile;
     };
 
     return {
         makeProfileRequest: function () {
+            var deferred = $q.defer();
             $http.get(Oauth.profileUrl).
                 success(function (data) {
-                    oauthProfile = data;
+                    $rootScope.oauthProfile = data;
+                    deferred.resolve(data);
+                })
+                .error(function () {
+                    deferred.reject("error");
                 });
+
+            return deferred.promise;
         }
     };
 

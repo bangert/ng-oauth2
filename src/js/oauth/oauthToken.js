@@ -1,7 +1,7 @@
 'use strict';
 
 /*jshint -W084 */
-angular.module('ng-oauth2.token', ['ngStorage']).factory('OauthToken', ['$rootScope', '$location', '$sessionStorage', '$timeout', 'OauthEndpoint', function ($rootScope, $location, $sessionStorage, $timeout, OauthEndpoint) {
+angular.module('ng-oauth2.token', ['ngStorage']).factory('OauthToken', ['$rootScope', '$location', '$sessionStorage', '$timeout', 'Oauth', 'OauthEndpoint', function ($rootScope, $location, $sessionStorage, $timeout, Oauth, OauthEndpoint) {
 
     var oAuth2HashTokens = [
         'access_token',
@@ -15,14 +15,23 @@ angular.module('ng-oauth2.token', ['ngStorage']).factory('OauthToken', ['$rootSc
 
     $rootScope.oauthLogout = function () {
         delete $sessionStorage.oauthToken;
-        $timeout(function () {
-            OauthEndpoint.redirectToLogoutPage();
-        }, 110);
+        if (Oauth.redirectOnLogout) {
+            $timeout(function () {
+                OauthEndpoint.redirectToLogoutPage();
+            }, 110);
+        }
     };
 
     return {
         setToken: function (token) {
+            token.expires_at = this.getExpiresAt(token.expires_in);
             $sessionStorage.oauthToken = token;
+        },
+
+        getExpiresAt: function (expiresIn) {
+            var time = new Date();
+            time.setSeconds(time.getSeconds() + parseInt(expiresIn));
+            return time.getTime();
         },
 
         getToken: function () {
@@ -58,7 +67,7 @@ angular.module('ng-oauth2.token', ['ngStorage']).factory('OauthToken', ['$rootSc
         },
 
         isExpired: function () {
-            return (this.getToken() && this.getToken().expires_at && new Date(this.getToken().expires_at) < new Date());
+            return new Date().getTime() >= this.getToken().expires_at;
         }
     };
 

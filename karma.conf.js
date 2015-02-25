@@ -2,6 +2,8 @@
 
 var vendordeps = require('wiredep')().js;
 var applicationFiles = [
+    'src/js/oauth/oauthProvider.js',
+    'src/js/oauth/**/*.js',
     'src/js/**/*.js'
 ];
 var testFiles = [
@@ -20,16 +22,17 @@ module.exports = function (config) {
         },
 
         exclude: [
-            'src/js/stubs/**/*.js'
+            'src/js/stub/**/*.js'
         ],
 
         autoWatch: true,
 
         frameworks: ['jasmine'],
 
-        browsers: ['Chrome'],
+        browsers: ['PhantomJS'],
 
         plugins: [
+            'karma-phantomjs-launcher',
             'karma-chrome-launcher',
             'karma-firefox-launcher',
             'karma-jasmine',

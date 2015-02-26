@@ -4,9 +4,9 @@ describe('OauthProfile', function () {
 
     var $httpBackend;
 
-    beforeEach(module('testApp'));
+    beforeEach(module('ng-oauth2'));
 
-    beforeEach(inject(function (_$httpBackend_) {
+    beforeEach(inject(function (_$httpBackend_, OauthProfile) {
         $httpBackend = _$httpBackend_;
 
         var user = {displayName: 'bob'};

@@ -22,7 +22,8 @@ module.exports = function (config) {
         },
 
         exclude: [
-            'src/js/stub/**/*.js'
+            'src/js/stub/**/*.js',
+            'src/js/oauth/oauthStartup.js'
         ],
 
         autoWatch: true,

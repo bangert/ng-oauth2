@@ -13,14 +13,18 @@ angular.module('ng-oauth2.endpoint', []).factory('OauthEndpoint', ['$window', '$
         },
 
         redirectToOauthPage: function () {
-            $window.location.assign(this.getOauthUrl());
+            this.redirectToUrl(this.getOauthUrl());
         },
 
         redirectToUnauthorizedPage: function () {
-            $window.location.assign(Oauth.unauthorizedUrl);
+            this.redirectToUrl(Oauth.unauthorizedUrl);
         },
 
         redirectToLogoutPage: function () {
+            this.redirectToUrl(Oauth.logoutUrl);
+        },
+
+        redirectToUrl: function (url) {
             $window.location.assign(Oauth.logoutUrl);
         }
     };

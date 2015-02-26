@@ -6,7 +6,7 @@ describe('OauthToken', function () {
 
     beforeEach(module('testApp'));
 
-    beforeEach(inject(function ($window, $sessionStorage, $timeout) {
+    beforeEach(inject(function ($window, $sessionStorage, $timeout, OauthToken) {
         $window.location.assign = jasmine.createSpy();
         window = $window;
         sessionStorage = $sessionStorage;

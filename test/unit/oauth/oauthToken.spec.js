@@ -75,11 +75,8 @@ describe('OauthToken', function () {
 
     describe('getTokenFromString()', function () {
 
-        beforeEach(inject(function ($location) {
+        it("should return the list of params from the browser url", inject(function ($location, OauthToken) {
             $location.hash('access_token=testToken&token_type=bearer&state=testState&expires_in=43199&scope=openid&jti=b0c7401a-a8fd-48ee-b26e-c98daa4810cf');
-        }));
-
-        it("should return the list of params from the browser url", inject(function (OauthToken) {
             var token = OauthToken.getTokenFromString();
             expect(token.access_token).toBe('testToken');
             expect(token.token_type).toBe('bearer');
@@ -87,6 +84,12 @@ describe('OauthToken', function () {
             expect(token.expires_in).toBe('43199');
             expect(token.scope).toBe('openid');
             expect(token.jti).toBe('b0c7401a-a8fd-48ee-b26e-c98daa4810cf');
+        }));
+
+        it("should return undefined if no parameters are on the browser url", inject(function ($location, OauthToken) {
+            $location.hash('');
+            var token = OauthToken.getTokenFromString();
+            expect(token).toBeUndefined();
         }));
     });
 

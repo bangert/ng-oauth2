@@ -2,4 +2,8 @@ language: node_js
 node_js:
   - '0.10'
 
-codeclimate < test_results/coverage/**/lcov.info
+before_script:
+  - npm install -g codeclimate-test-reporter
+
+after_script:
+  - codeclimate < test_results/coverage/**/lcov.info

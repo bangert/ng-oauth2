@@ -43,15 +43,15 @@ module.exports = function (config) {
             'karma-allure-reporter'
         ],
 
-        reporters: ['progress'],
+        reporters: ['progress', 'coverage'],
 
         coverageReporter: {
             reporters: [
                 {type: 'html', dir: 'test_results/coverage/', subdir: 'html'},
-                {type: 'teamcity'},
                 {type: 'text-summary'},
                 {type: 'cobertura', dir: 'test_results/coverage/', subdir: 'cobertura'},
                 {type: 'json', dir: 'test_results/coverage/', subdir: 'json'},
+                {type: 'lcov', dir: 'test_results/coverage/', subdir: 'lcov'}
             ]
         },
 

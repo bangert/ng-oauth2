@@ -25,7 +25,7 @@ angular.module('ng-oauth2.endpoint', []).factory('OauthEndpoint', ['$window', '$
         },
 
         redirectToUrl: function (url) {
-            $window.location.assign(Oauth.logoutUrl);
+            $window.location.assign(url);
         }
     };
 

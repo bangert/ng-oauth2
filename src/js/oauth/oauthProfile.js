@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ng-oauth2.profile', []).factory('OauthProfile', ['$rootScope', '$q', '$http', 'Oauth', 'OauthEndpoint', function ($rootScope, $q, $http, Oauth, OauthEndpoint) {
+angular.module('ng-oauth2.profile', []).factory('OauthProfile', ['$rootScope', '$q', '$http', 'Oauth', function ($rootScope, $q, $http, Oauth) {
 
     $rootScope.oauthProfile = null;
 

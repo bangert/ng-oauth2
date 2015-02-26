@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ng-oauth2').factory('oauthHttpInterceptor', ['$q', 'Oauth', 'OauthToken', function ($q, Oauth, OauthToken) {
+angular.module('ng-oauth2').factory('OauthHttpInterceptor', ['$q', 'Oauth', 'OauthToken', function ($q, Oauth, OauthToken) {
     return {
         request: function (config) {
 

@@ -36,10 +36,6 @@ angular.module('ng-oauth2', [
             config.profileUrl = profileUrl;
         },
 
-        setAuthorizePath: function (authorizePath) {
-            config.authorizePath = authorizePath;
-        },
-
         setUnauthorizedUrl: function (unauthorizedUrl) {
             config.unauthorizedUrl = unauthorizedUrl;
         },

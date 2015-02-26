@@ -18,7 +18,7 @@ module.exports = function (config) {
         files: files,
 
         preprocessors: {
-            'src/js/**/*.js': ['coverage']
+            'src/js/oauth/**/*.js': ['coverage']
         },
 
         exclude: [

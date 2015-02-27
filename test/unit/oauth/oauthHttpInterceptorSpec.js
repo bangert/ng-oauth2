@@ -24,7 +24,7 @@ describe('OauthHttpInterceptor', function () {
             });
         });
 
-        fit("should add the authorization token to the request when sendTokenOnEveryRequest is enabled", inject(function (Oauth, OauthProfile) {
+        it("should add the authorization token to the request when sendTokenOnEveryRequest is enabled", inject(function (Oauth, OauthProfile) {
             Oauth.sendTokenOnEveryRequest = true;
             OauthProfile.makeProfileRequest();
             $httpBackend.flush();

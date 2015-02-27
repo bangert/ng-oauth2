@@ -6,10 +6,10 @@ var enforcer    = require("gulp-istanbul-enforcer");
 gulp.task('enforce-coverage', function () {
     var options = {
         thresholds: {
-            statements: 80,
-            branches: 80,
-            lines: 80,
-            functions: 80
+            statements: 95,
+            branches: 95,
+            lines: 95,
+            functions: 95
         },
         coverageDirectory: 'test_results/coverage/report',
         rootDirectory: ''

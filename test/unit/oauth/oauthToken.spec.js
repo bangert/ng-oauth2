@@ -41,7 +41,6 @@ describe('OauthToken', function () {
     describe('setToken()', function () {
 
         it("should create a new token object on the users session", inject(function (OauthToken) {
-            expect(sessionStorage.oauthToken).toBeUndefined();
             OauthToken.setToken({token: 'test', expires_in: 399});
             expect(sessionStorage.oauthToken.token).toBe('test');
             expect(sessionStorage.oauthToken.expires_in).toBe(399);
@@ -55,10 +54,6 @@ describe('OauthToken', function () {
             expect(OauthToken.getToken().token).toBe('test');
             expect(OauthToken.getToken().expires).toBe(399);
         }));
-
-        it("should return null if there is no token object set on the session", inject(function (OauthToken) {
-            expect(OauthToken.getToken()).toBeUndefined();
-        }));
     });
 
     describe('isTokenSet()', function () {
@@ -69,6 +64,7 @@ describe('OauthToken', function () {
         }));
 
         it("should return false if the token is not set on the users session", inject(function (OauthToken) {
+            sessionStorage.oauthToken = undefined;
             expect(OauthToken.isTokenSet()).toBeFalsy();
         }));
     });

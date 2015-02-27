@@ -28,7 +28,7 @@ describe('OauthHttpInterceptor', function () {
             Oauth.sendTokenOnEveryRequest = true;
             OauthProfile.makeProfileRequest();
             $httpBackend.flush();
-            expect(token).toBe('test_token');
+            expect(token).toBe('test_token1');
         }));
 
         it('should not add the authorization token to the request when sendTokenOnEveryRequest is disabled', inject(function (Oauth, OauthProfile) {

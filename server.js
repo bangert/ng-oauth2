@@ -11,6 +11,7 @@ var express = require('express');
 var app = express();
 
 /* Development */
+app.use('/dist', express.static(__dirname + '/dist'));
 app.use('/bower_components', express.static(__dirname + '/bower_components'));
 app.use('/src/js', express.static(__dirname + '/src/js'));
 

@@ -1,72 +1,4 @@
 'use strict';
-angular.module('ng-oauth2').config(['$httpProvider', function ($httpProvider) {
-
-    $httpProvider.interceptors.push('oauthHttpInterceptor');
-    $httpProvider.interceptors.push('oauthUnauthorizedHttpInterceptor');
-
-}]);
-angular.module('ng-oauth2.endpoint', []).factory('OauthEndpoint', ['$window', '$location', 'Oauth', function ($window, $location, Oauth) {
-
-    return {
-        getOauthUrl: function () {
-            var url,
-                authPathHasQuery = (Oauth.authorizePath.indexOf('?') == -1) ? false : true,
-                appendChar = (authPathHasQuery) ? '&' : '?';    //if authorizePath has ? already append OAuth2 params
-
-            url = Oauth.oauthServerAddress + Oauth.authorizePath +
-            appendChar + 'response_type=' + Oauth.responseType + '&' +
-            'client_id=' + encodeURIComponent(Oauth.clientId) + '&' +
-            'redirect_uri=' + encodeURIComponent($location.absUrl()) + '&' +
-            'scope=' + Oauth.scope + '&' +
-            'state=' + Oauth.state;
-
-            return url;
-        },
-
-        redirectToOauthPage: function () {
-            $window.location.assign(this.getOauthUrl());
-        },
-
-        redirectToUnauthorizedPage: function () {
-            $window.location.assign(Oauth.unauthorizedUrl);
-        }
-    };
-
-}]);
-angular.module('ng-oauth2').factory('oauthHttpInterceptor', ['$q', 'Oauth', 'OauthToken', function ($q, Oauth, OauthToken) {
-    return {
-        request: function (config) {
-
-            if (Oauth.sendTokenOnEveryRequest && OauthToken.getToken()) {
-                config.headers[Oauth.headerTokenName] = OauthToken.getToken().access_token;
-            }
-
-            return config;
-        }
-    };
-}]);
-angular.module('ng-oauth2.profile', []).factory('OauthProfile', ['$http', 'Oauth', function ($http, Oauth) {
-
-    var profile = null;
-
-    return {
-        makeProfileRequest: function () {
-            $http.get(Oauth.profileUrl).
-                success(function (data) {
-                    profile = data;
-                });
-        },
-
-        getProfile: function () {
-            return profile;
-        },
-
-        hasProfile: function () {
-            return !!profile;
-        }
-    };
-
-}]);
 angular.module('ng-oauth2', [
     'ng-oauth2.token',
     'ng-oauth2.profile',
@@ -76,15 +8,16 @@ angular.module('ng-oauth2', [
             oauthServerAddress: '',
             clientId: '',
             profileUrl: '',
-            authorizePath: '/oauth/authorize',
             unauthorizedUrl: '',
+            logoutUrl: '',
             responseType: 'token',
             scope: '',
             state: '',
             headerTokenName: 'Authorization',
             randomizeState: true,
             redirectOnUnauthorized: true,
-            sendTokenOnEveryRequest: true
+            sendTokenOnEveryRequest: true,
+            redirectOnLogout: true
         };
     return {
         setOauthServerAddress: function (oauthServerAddress) {
@@ -96,14 +29,14 @@ angular.module('ng-oauth2', [
         setProfileUrl: function (profileUrl) {
             config.profileUrl = profileUrl;
         },
-        setAuthorizePath: function (authorizePath) {
-            config.authorizePath = authorizePath;
-        },
         setUnauthorizedUrl: function (unauthorizedUrl) {
             config.unauthorizedUrl = unauthorizedUrl;
         },
         setResponseType: function (responseType) {
             config.responseType = responseType;
+        },
+        setLogoutUrl: function (logoutUrl) {
+            config.logoutUrl = logoutUrl;
         },
         setScope: function (scope) {
             config.scope = scope;
@@ -123,14 +56,95 @@ angular.module('ng-oauth2', [
         setSendTokenOnEveryRequest: function (sendTokenOnEveryRequest) {
             config.sendTokenOnEveryRequest = sendTokenOnEveryRequest;
         },
+        setRedirectOnLogout: function (redirectOnLogout) {
+            config.redirectOnLogout = redirectOnLogout;
+        },
         $get: function () {
             return config;
         }
     };
 });
+angular.module('ng-oauth2').config(['$httpProvider', function ($httpProvider) {
+
+    $httpProvider.interceptors.push('OauthHttpInterceptor');
+    $httpProvider.interceptors.push('OauthUnauthorizedHttpInterceptor');
+
+}]);
+angular.module('ng-oauth2.endpoint', []).factory('OauthEndpoint', ['$window', '$location', 'Oauth', function ($window, $location, Oauth) {
+
+    return {
+        getOauthUrl: function () {
+            return Oauth.oauthServerAddress + '?' +
+                'response_type=' + Oauth.responseType + '&' +
+                'client_id=' + encodeURIComponent(Oauth.clientId) + '&' +
+                'redirect_uri=' + encodeURIComponent($location.absUrl()) + '&' +
+                'scope=' + Oauth.scope + '&' +
+                'state=' + Oauth.state;
+        },
+
+        redirectToOauthPage: function () {
+            this.redirectToUrl(this.getOauthUrl());
+        },
+
+        redirectToUnauthorizedPage: function () {
+            this.redirectToUrl(Oauth.unauthorizedUrl);
+        },
+
+        redirectToLogoutPage: function () {
+            this.redirectToUrl(Oauth.logoutUrl);
+        },
+
+        redirectToUrl: function (url) {
+            $window.location.assign(url);
+        }
+    };
+
+}]);
+angular.module('ng-oauth2').factory('OauthHttpInterceptor', ['$q', 'Oauth', 'OauthToken', function ($q, Oauth, OauthToken) {
+    return {
+        request: function (config) {
+
+            if (Oauth.sendTokenOnEveryRequest && OauthToken.getToken()) {
+                config.headers[Oauth.headerTokenName] = OauthToken.getToken().access_token;
+            }
+
+            return config;
+        }
+    };
+}]);
+angular.module('ng-oauth2.profile', []).factory('OauthProfile', ['$rootScope', '$q', '$http', 'Oauth', function ($rootScope, $q, $http, Oauth) {
+
+    $rootScope.oauthProfile = null;
+
+    $rootScope.getOauthProfile = function () {
+        return $rootScope.oauthProfile;
+    };
+
+    $rootScope.hasOauthProfile = function () {
+        return !!$rootScope.oauthProfile;
+    };
+
+    return {
+        makeProfileRequest: function () {
+            var deferred = $q.defer();
+            $http.get(Oauth.profileUrl).
+                success(function (data) {
+                    $rootScope.oauthProfile = data;
+                    deferred.resolve(data);
+                })
+                .error(function () {
+                    deferred.reject("error");
+                });
+
+            return deferred.promise;
+        }
+    };
+
+}]);
 angular.module('ng-oauth2').run(['OauthToken', 'OauthProfile', 'OauthEndpoint', function (OauthToken, OauthProfile, OauthEndpoint) {
 
     var token = OauthToken.getTokenFromString();
+    OauthToken.removeFragment();
 
     if (token) {
         OauthToken.setToken(token);
@@ -146,11 +160,37 @@ angular.module('ng-oauth2').run(['OauthToken', 'OauthProfile', 'OauthEndpoint', 
 
 }]);
 /*jshint -W084 */
-angular.module('ng-oauth2.token', ['ngStorage']).factory('OauthToken', ['$rootScope', '$location', '$sessionStorage', function ($rootScope, $location, $sessionStorage) {
+angular.module('ng-oauth2.token', ['ngStorage']).factory('OauthToken', ['$rootScope', '$location', '$sessionStorage', '$timeout', 'Oauth', 'OauthEndpoint', function ($rootScope, $location, $sessionStorage, $timeout, Oauth, OauthEndpoint) {
+
+    var oAuth2HashTokens = [
+        'access_token',
+        'token_type',
+        'expires_in',
+        'scope',
+        'state',
+        'error',
+        'error_description'
+    ];
+
+    $rootScope.oauthLogout = function () {
+        delete $sessionStorage.oauthToken;
+        if (Oauth.redirectOnLogout) {
+            $timeout(function () {
+                OauthEndpoint.redirectToLogoutPage();
+            }, 110);
+        }
+    };
 
     return {
         setToken: function (token) {
+            token.expires_at = this.getExpiresAt(token.expires_in);
             $sessionStorage.oauthToken = token;
+        },
+
+        getExpiresAt: function (expiresIn) {
+            var time = new Date();
+            time.setSeconds(time.getSeconds() + parseInt(expiresIn));
+            return time.getTime();
         },
 
         getToken: function () {
@@ -162,7 +202,6 @@ angular.module('ng-oauth2.token', ['ngStorage']).factory('OauthToken', ['$rootSc
         },
 
         getTokenFromString: function () {
-
             var params = {},
                 regex = /([^&=]+)=([^&]*)/g,
                 m;
@@ -176,18 +215,23 @@ angular.module('ng-oauth2.token', ['ngStorage']).factory('OauthToken', ['$rootSc
             }
         },
 
-        isExpired: function () {
-            return (this.getToken() && this.getToken().expires_at && new Date(this.getToken().expires_at) < new Date());
+        removeFragment: function () {
+            var curHash = $location.hash();
+            angular.forEach(oAuth2HashTokens, function (hashKey) {
+                var re = new RegExp('&' + hashKey + '(=[^&]*)?|^' + hashKey + '(=[^&]*)?&?');
+                curHash = curHash.replace(re, '');
+            });
+
+            $location.hash(curHash);
         },
 
-        destroy: function () {
-            $sessionStorage.oauthToken = null;
-            $rootScope.$broadcast('oauth:logout');
+        isExpired: function () {
+            return new Date().getTime() >= this.getToken().expires_at;
         }
     };
 
 }]);
-angular.module('ng-oauth2').factory('oauthUnauthorizedHttpInterceptor', ['$rootScope', '$q', 'Oauth', 'OauthEndpoint', function ($rootScope, $q, Oauth, OauthEndpoint) {
+angular.module('ng-oauth2').factory('OauthUnauthorizedHttpInterceptor', ['$rootScope', '$q', 'Oauth', 'OauthEndpoint', function ($rootScope, $q, Oauth, OauthEndpoint) {
     return {
         responseError: function (rejection) {
             if (Oauth.redirectOnUnauthorized && rejection.status === 401) {

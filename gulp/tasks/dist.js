@@ -11,9 +11,12 @@ var removeUseStrict = require("gulp-remove-use-strict");
 
 // Dist JS
 gulp.task('dist', ['clean', 'js'], function () {
-    return gulp.src([
-        'src/js/oauth/**/*.js'
-    ])
+    return gulp.src(
+        [
+            'src/js/oauth/oauthProvider.js',
+            'src/js/oauth/**/*.js'
+        ]
+    )
         .pipe(concat('ng-oauth2.js'))
         .pipe(removeUseStrict())
         .pipe(filesize())

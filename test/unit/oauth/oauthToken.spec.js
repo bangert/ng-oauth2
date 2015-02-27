@@ -109,7 +109,7 @@ describe('OauthToken', function () {
             jasmine.clock().mockDate(baseTime);
         }));
 
-        it("should return true if today date is greater than the session expires_at parameter", inject(function ($sessionStorage, OauthToken) {
+        fit("should return true if today date is greater than the session expires_at parameter", inject(function ($sessionStorage, OauthToken) {
             $sessionStorage.oauthToken = {expires_at: 138248280000};
             expect(OauthToken.isExpired()).toBeTruthy();
         }));

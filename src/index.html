@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<div ng-controller="TestCtrl">
+<div>
     <div ng-hide="hasOauthProfile()">
         Loading
     </div>
@@ -19,7 +19,9 @@
 
     <br>
     <button ng-click="oauthLogout()">Logout</button>
-    <button ng-click="simulateUnauthorized()">Simulate a 401 unauthorized response from server</button>
+    <button ng-click="simulateUnauthorized()" ng-controller="TestCtrl">Simulate a 401 unauthorized response from
+        server
+    </button>
 </div>
 
 <!-- Scripts -->

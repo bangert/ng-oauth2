@@ -115,7 +115,7 @@ describe('OauthToken', function () {
         }));
 
         it("should return false if today date is less than the session expires_at parameter", inject(function ($sessionStorage, OauthToken) {
-            $sessionStorage.oauthToken = {expires_at: 1382482800001};
+            $sessionStorage.oauthToken = {expires_at: 1382492800001};
             expect(OauthToken.isExpired()).toBeFalsy();
         }));
 

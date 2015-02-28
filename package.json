@@ -1,11 +1,11 @@
 {
   "name": "ng-oauth2",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/el-davo/ng-oauth2.git"
   },
   "keywords": [],
   "author": [],

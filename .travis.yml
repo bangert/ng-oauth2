@@ -6,7 +6,6 @@ install:
   - npm install
   - bower install
   - npm install -g karma-cli
-  - npm test
 
 cache:
   directories:

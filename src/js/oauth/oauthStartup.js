@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ng-oauth2').run(['OauthToken', 'OauthProfile', 'OauthEndpoint', function (OauthToken, OauthProfile, OauthEndpoint) {
+angular.module('ng-oauth2').run(['$rootScope', 'OauthToken', 'OauthProfile', 'OauthEndpoint', function ($rootScope, OauthToken, OauthProfile, OauthEndpoint) {
 
     var token = OauthToken.getTokenFromString();
     OauthToken.removeFragment();
@@ -13,8 +13,15 @@ angular.module('ng-oauth2').run(['OauthToken', 'OauthProfile', 'OauthEndpoint', 
         OauthProfile.makeProfileRequest();
     }
 
+    if (OauthToken.isTokenSet() && OauthToken.isExpired()) {
+        OauthEndpoint.redirectToOauthPage();
+    }
+
     if (!OauthToken.isTokenSet()) {
         OauthEndpoint.redirectToOauthPage();
     }
 
+    $rootScope.$on('oauth2:logout', function() {
+        $rootScope.oauthLogout();
+    });
 }]);

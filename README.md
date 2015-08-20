@@ -9,7 +9,7 @@ An oauth2 implementation for angular based appliactions
 Run the following command to install
 
 ```
-bower install ng-oauth2 --save-dev
+bower install ng-oauth2 --save
 ```
 
 ## Activate Oauth
@@ -55,7 +55,7 @@ OauthProvider.sendTokenOnEveryRequest(true);                //Whether or not to 
 OauthProvider.redirectOnLogout(true);                       //Whether or not to redirect after logging out (Default = true)
 ```
 
-ng-oauth2 will create a number of functions on the rrot scope that you may use in your partials. An example implementation is below
+ng-oauth2 will create a number of functions on the root scope that you may use in your partials. An example implementation is below
 
 ```html
 <div>
@@ -73,4 +73,12 @@ ng-oauth2 will create a number of functions on the rrot scope that you may use i
         server
     </button>
 </div>
+```
+
+## Logout
+
+To logout from anywhere inside the application just emit the event as shown below
+
+```js
+$scope.$emit('oauth2:logout');
 ```

@@ -67,7 +67,7 @@ angular.module('ng-oauth2.token', ['ngStorage']).factory('OauthToken', ['$rootSc
         },
 
         isExpired: function () {
-            return new Date().getTime() >= this.getToken().expires_at;
+            return this.getToken().expires_at ? new Date().getTime() >= this.getToken().expires_at: true;
         }
     };
 

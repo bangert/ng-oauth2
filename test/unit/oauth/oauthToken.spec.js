@@ -111,17 +111,27 @@ describe('OauthToken', function () {
 
         it("should return true if today date is greater than the session expires_at parameter", inject(function ($sessionStorage, OauthToken) {
             $sessionStorage.oauthToken = {expires_at: 138248280000};
-            expect(OauthToken.isExpired()).toBeTruthy();
+            expect(OauthToken.isExpired()).toBe(true);
         }));
 
         it("should return false if today date is less than the session expires_at parameter", inject(function ($sessionStorage, OauthToken) {
             $sessionStorage.oauthToken = {expires_at: 1382492800001};
-            expect(OauthToken.isExpired()).toBeFalsy();
+            expect(OauthToken.isExpired()).toBe(false);
         }));
 
         it("should return true if today date is equal to the session expires_at parameter", inject(function ($sessionStorage, OauthToken) {
             $sessionStorage.oauthToken = {expires_at: 1382482800000};
-            expect(OauthToken.isExpired()).toBeTruthy();
+            expect(OauthToken.isExpired()).toBe(true);
+        }));
+
+        it("should return false if the expiry date does not exist", inject(function ($sessionStorage, OauthToken) {
+            $sessionStorage.oauthToken = {};
+            expect(OauthToken.isExpired()).toBe(true);
+        }));
+
+        it("should return false if the expiry date is null", inject(function ($sessionStorage, OauthToken) {
+            $sessionStorage.oauthToken = {expires_at: null};
+            expect(OauthToken.isExpired()).toBe(true);
         }));
     });
 

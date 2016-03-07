@@ -104,23 +104,23 @@ describe('OauthToken', function () {
 
     describe('isExpired()', function () {
 
+        var baseTime = new Date();
         beforeEach(inject(function () {
-            var baseTime = new Date(2013, 9, 23);
             jasmine.clock().mockDate(baseTime);
         }));
 
         it("should return true if today date is greater than the session expires_at parameter", inject(function ($sessionStorage, OauthToken) {
-            $sessionStorage.oauthToken = {expires_at: 138248280000};
+            $sessionStorage.oauthToken = {expires_at: baseTime.getTime() - 1};
             expect(OauthToken.isExpired()).toBe(true);
         }));
 
         it("should return false if today date is less than the session expires_at parameter", inject(function ($sessionStorage, OauthToken) {
-            $sessionStorage.oauthToken = {expires_at: 1382492800001};
+            $sessionStorage.oauthToken = {expires_at: baseTime.getTime() + 1};
             expect(OauthToken.isExpired()).toBe(false);
         }));
 
         it("should return true if today date is equal to the session expires_at parameter", inject(function ($sessionStorage, OauthToken) {
-            $sessionStorage.oauthToken = {expires_at: 1382482800000};
+            $sessionStorage.oauthToken = {expires_at: baseTime.getTime()};
             expect(OauthToken.isExpired()).toBe(true);
         }));
 

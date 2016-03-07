@@ -5,15 +5,14 @@ describe('OauthProvider', function () {
     beforeEach(module('ng-oauth2'));
 
     beforeEach(function () {
-        var fakeModule = angular.module('test.app', function () {
-        });
+        var fakeModule = angular.module('test.app', ['ng-oauth2']);
         fakeModule.config(function (OauthProvider) {
             OauthProvider.setOauthServerAddress('http://test.com/login');
             OauthProvider.setClientId('testClientId');
             OauthProvider.setProfileUrl('http://test.com/profile');
             OauthProvider.setUnauthorizedUrl('http://test.com/unauthorized');
-            OauthProvider.setResponseType('testResponseType');
             OauthProvider.setLogoutUrl('http://test.com/logout');
+            OauthProvider.setResponseType('testResponseType');
             OauthProvider.setScope('testScope');
             OauthProvider.setState('testState');
             OauthProvider.setHeaderTokenName('testHeaderTokenName');

@@ -14,3 +14,7 @@ npm-debug.log
 
 # Report tools
 /test_results/*
+
+#vim swp files
+*.swp
+

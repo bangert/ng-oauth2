@@ -5,7 +5,11 @@ angular.module('ng-oauth2').factory('OauthHttpInterceptor', ['$q', 'Oauth', 'Oau
         request: function (config) {
 
             if (Oauth.sendTokenOnEveryRequest && OauthToken.getToken()) {
-                config.headers[Oauth.headerTokenName] = OauthToken.getToken().access_token;
+                if (Oauth.headerTokenName.toLowerCase == 'authorization') {
+                    config.headers[Oauth.headerTokenName] = 'Bearer ' + OauthToken.getToken().access_token;
+                } else {
+                    config.headers[Oauth.headerTokenName] = OauthToken.getToken().access_token;
+                }
             }
 
             return config;

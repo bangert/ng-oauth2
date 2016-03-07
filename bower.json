@@ -1,7 +1,7 @@
 {
   "name": "ng-oauth2",
   "description": "An oauth2 implementation for angular based applications",
-  "version": "0.0.6",
+  "version": "1.0.0",
   "hompage": "https://github.com/el-davo/ng-oauth2",
   "license": "MIT",
   "main": [

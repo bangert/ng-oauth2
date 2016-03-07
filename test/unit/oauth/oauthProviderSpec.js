@@ -12,8 +12,8 @@ describe('OauthProvider', function () {
             OauthProvider.setClientId('testClientId');
             OauthProvider.setProfileUrl('http://test.com/profile');
             OauthProvider.setUnauthorizedUrl('http://test.com/unauthorized');
-            OauthProvider.setResponseType('testResponseType');
             OauthProvider.setLogoutUrl('http://test.com/logout');
+            OauthProvider.setResponseType('testResponseType');
             OauthProvider.setScope('testScope');
             OauthProvider.setState('testState');
             OauthProvider.setHeaderTokenName('testHeaderTokenName');

@@ -82,3 +82,7 @@ To logout from anywhere inside the application just emit the event as shown belo
 ```js
 $scope.$emit('oauth2:logout');
 ```
+
+## License
+
+MIT

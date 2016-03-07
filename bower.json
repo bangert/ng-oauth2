@@ -1,6 +1,7 @@
 {
   "name": "ng-oauth2",
-  "version": "0.0.5",
+  "version": "0.0.6",
+  "license": "MIT",
   "main": [
     "dist/ng-oauth2.min.js"
   ],

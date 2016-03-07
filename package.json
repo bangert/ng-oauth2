@@ -1,6 +1,6 @@
 {
   "name": "ng-oauth2",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "",
   "main": "",
   "repository": {
@@ -9,7 +9,7 @@
   },
   "keywords": [],
   "author": [],
-  "license": "",
+  "license": "MIT",
   "dependencies": {},
   "devDependencies": {
     "bower": "^1.3.1",

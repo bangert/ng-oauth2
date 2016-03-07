@@ -40,7 +40,7 @@
     "karma-jasmine": "^0.3.5",
     "karma-junit-reporter": "^0.2.2",
     "karma-teamcity-reporter": "^0.1.2",
-    "phantomjs": "^1.9.7-8",
+    "phantomjs": "^2.1.1",
     "protractor": "^1.0.0-rc2",
     "protractor-html-screenshot-reporter": "0.0.10",
     "protractor-screenshot-reporter": "0.0.5",
@@ -62,7 +62,7 @@
     "gulp-prompt": "^0.1.1",
     "gulp-bump": "^0.1.10",
     "gulp-remove-use-strict": "0.0.2",
-    "karma-phantomjs-launcher": "^0.1.4"
+    "karma-phantomjs-launcher": "^1.0.0"
   },
   "scripts": {
     "test": "karma start karma.conf.js --single-run",

@@ -49,10 +49,10 @@ OauthProvider.setResponseType('token');                     //Sets the response 
 OauthProvider.setScope('scope');                            //Sets the scope flag on the login url (Default = empty)
 OauthProvider.setState('state');                            //Sets the state flag on the login url (Default = empty). Used to prevent CSRF attacks
 OauthProvider.setHeaderTokenName('authorization');          //Sets the header to be used to pass the oauth token on each request (Default = Authorization)
-OauthProvider.randomizeState(true);                         //Whether or not to generate a random state flag on the login url (Default = true)
-OauthProvider.redirectOnUnauthorized(true);                 //Whether or not to redirect on a 401 response on any request (Default = true)
-OauthProvider.sendTokenOnEveryRequest(true);                //Whether or not to send the oauth token on every request header (Default = true)
-OauthProvider.redirectOnLogout(true);                       //Whether or not to redirect after logging out (Default = true)
+OauthProvider.setRandomizeState(true);                      //Whether or not to generate a random state flag on the login url (Default = true)
+OauthProvider.setRedirectOnUnauthorized(true);              //Whether or not to redirect on a 401 response on any request (Default = true)
+OauthProvider.setSendTokenOnEveryRequest(true);             //Whether or not to send the oauth token on every request header (Default = true)
+OauthProvider.setRedirectOnLogout(true);                    //Whether or not to redirect after logging out (Default = true)
 ```
 
 ng-oauth2 will create a number of functions on the root scope that you may use in your partials. An example implementation is below

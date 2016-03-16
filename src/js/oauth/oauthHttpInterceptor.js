@@ -5,7 +5,7 @@ angular.module('ng-oauth2').factory('OauthHttpInterceptor', ['Oauth', 'OauthToke
         request: function (config) {
 
             if (Oauth.sendTokenOnEveryRequest && OauthToken.getToken()) {
-                if (Oauth.headerTokenName.toLowerCase == 'authorization') {
+                if (Oauth.headerTokenName.toLowerCase() === 'authorization') {
                     config.headers[Oauth.headerTokenName] = 'Bearer ' + OauthToken.getToken().access_token;
                 } else {
                     config.headers[Oauth.headerTokenName] = OauthToken.getToken().access_token;
